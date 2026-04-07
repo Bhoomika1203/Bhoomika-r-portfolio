@@ -1,688 +1,650 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhoomika R | Research Assistant</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhoomika R — Research Assistant, IISc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        :root {
-            --primary: #0093E9;
-            --secondary: #667eea;
-            --accent: #764ba2;
-            --dark: #2c3e50;
-            --light: #ffffff;
-            --grey: #f4f4f4;
-            --text: #333;
-            --card-hover: #f8f9fa;
-        }
+  :root {
+    --bg: #000000;
+    --surface: #0a0a0a;
+    --surface2: #111111;
+    --surface3: #1a1a1a;
+    --border: rgba(255,255,255,0.08);
+    --text: #f5f5f7;
+    --text-secondary: #a1a1a6;
+    --text-tertiary: #6e6e73;
+    --accent: #2997ff;
+    --accent2: #30d158;
+    --accent3: #ff9f0a;
+    --accent4: #bf5af2;
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  html { scroll-behavior: smooth; }
 
-        html {
-            scroll-behavior: smooth;
-        }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: default;
+  }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.7;
-            background: var(--light);
-            color: var(--text);
-        }
+  /* CUSTOM CURSOR — hidden by default, shown on mouse move */
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+    mix-blend-mode: screen;
+    display: none;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(41,151,255,0.4);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99998;
+    transition: width 0.3s, height 0.3s, border-color 0.3s;
+    display: none;
+  }
 
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            overflow: hidden;
-            padding: 0 2rem;
-        }
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+  }
 
-        h1, h2, h3 {
-            font-weight: 600;
-            color: var(--dark);
-        }
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 0 2rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--border);
+  }
 
-        h2 {
-            font-size: 2.2rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 0.5rem;
-            color: var(--dark);
-            border-bottom: 3px solid var(--primary);
-            display: inline-block;
-        }
-        
-        section {
-            padding: 4rem 0;
-        }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    font-style: italic;
+  }
 
-        .section-title-wrapper {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .navbar {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-        
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
 
-        .navbar .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-        }
+  .nav-links a {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+    font-weight: 400;
+  }
 
-        .navbar ul {
-            display: flex;
-            list-style: none;
-        }
+  .nav-links a:hover { color: var(--text); }
 
-        .navbar ul li {
-            margin-left: 20px;
-        }
+  /* HERO */
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 6rem 2rem 4rem;
+    overflow: hidden;
+  }
 
-        .navbar ul li a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-        }
+  .hero-bg { position: absolute; inset: 0; overflow: hidden; }
 
-        .navbar ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: drift 12s ease-in-out infinite;
+  }
+  .orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(41,151,255,0.2) 0%, transparent 70%); top: -10%; left: -10%; animation-delay: 0s; }
+  .orb-2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(191,90,242,0.15) 0%, transparent 70%); bottom: -10%; right: -5%; animation-delay: -4s; }
+  .orb-3 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(48,209,88,0.12) 0%, transparent 70%); top: 30%; left: 50%; animation-delay: -8s; }
 
-        .navbar ul li a:hover {
-            color: var(--primary);
-        }
+  @keyframes drift {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(30px,-20px) scale(1.05); }
+    66% { transform: translate(-20px,30px) scale(0.95); }
+  }
 
-        .navbar ul li a:hover::after {
-            width: 100%;
-        }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
 
-        .header {
-            background: linear-gradient(135deg, rgba(0,147,233,0.9) 0%, rgba(102,126,234,0.9) 50%, rgba(118,75,162,0.9) 100%), 
-                        url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Indian_Institute_of_Science%2C_Bangalore_-_Main_Building.jpg/1280px-Indian_Institute_of_Science%2C_Bangalore_-_Main_Building.jpg');
-            background-size: cover;
-            background-position: center;
-            background-blend-mode: multiply;
-            color: var(--light);
-            text-align: center;
-            padding: 8rem 0;
-            position: relative;
-            overflow: hidden;
-        }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    position: relative;
+    animation: fadeUp 1s ease 0.1s both;
+  }
+  .hero-eyebrow::before { content: ''; display: inline-block; width: 40px; height: 1px; background: var(--accent); vertical-align: middle; margin-right: 12px; }
+  .hero-eyebrow::after { content: ''; display: inline-block; width: 40px; height: 1px; background: var(--accent); vertical-align: middle; margin-left: 12px; }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveGrid 20s linear infinite;
-            z-index: 1;
-        }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 7vw, 8rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    position: relative;
+    animation: fadeUp 1s ease 0.3s both;
+    margin-bottom: 0.2em;
+    white-space: nowrap;
+  }
 
-        @keyframes moveGrid {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
+  /* R stays white, on same line */
+  .hero h1 em {
+    font-style: italic;
+    color: #ffffff;
+  }
 
-        .header h1 {
-            font-size: 3.5rem;
-            color: var(--light);
-            position: relative;
-            z-index: 2;
-            animation: fadeInUp 1s ease;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-        }
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--text-secondary);
+    font-weight: 300;
+    max-width: 500px;
+    animation: fadeUp 1s ease 0.5s both;
+    line-height: 1.5;
+    margin-bottom: 3rem;
+  }
 
-        .header .tagline {
-            font-size: 1.3rem;
-            margin-top: 0.5rem;
-            color: var(--light);
-            position: relative;
-            z-index: 2;
-            animation: fadeInUp 1s ease 0.2s backwards;
-            text-shadow: 1px 1px 8px rgba(0,0,0,0.3);
-        }
+  .hero-cta { display: flex; gap: 1rem; animation: fadeUp 1s ease 0.7s both; }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  .btn-primary {
+    padding: 0.85rem 2rem; background: var(--accent); color: white; border: none;
+    border-radius: 980px; font-size: 0.9rem; font-family: var(--sans); font-weight: 500;
+    text-decoration: none; transition: all 0.3s ease; letter-spacing: 0.01em;
+  }
+  .btn-primary:hover { background: #409cff; transform: scale(1.02); box-shadow: 0 0 30px rgba(41,151,255,0.4); }
 
-        #about p {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-        
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            text-align: left;
-        }
-        
-        .skill-category {
-            background: var(--light);
-            color: var(--text);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            border-left: 4px solid var(--primary);
-            position: relative;
-            overflow: hidden;
-        }
+  .btn-ghost {
+    padding: 0.85rem 2rem; background: transparent; color: var(--accent);
+    border: 1px solid rgba(41,151,255,0.4); border-radius: 980px; font-size: 0.9rem;
+    font-family: var(--sans); font-weight: 500; text-decoration: none; transition: all 0.3s ease;
+  }
+  .btn-ghost:hover { border-color: var(--accent); background: rgba(41,151,255,0.08); }
 
-        .skill-category::after {
-            position: absolute;
-            right: 15px;
-            bottom: 15px;
-            font-size: 60px;
-            opacity: 0.06;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
-        .skill-category:nth-child(1)::after { content: '💡'; }
-        .skill-category:nth-child(2)::after { content: '💻'; }
-        .skill-category:nth-child(3)::after { content: '🔧'; }
-        .skill-category:nth-child(4)::after { content: '⚙️'; }
-        .skill-category:nth-child(5)::after { content: '🚀'; }
+  .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; animation: fadeUp 1s ease 1.2s both; }
+  .scroll-hint span { font-family: var(--mono); font-size: 0.6rem; color: var(--text-tertiary); letter-spacing: 0.15em; text-transform: uppercase; }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--text-tertiary), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+  @keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-        .skill-category:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-            border-left-width: 6px;
-        }
+  /* SECTIONS */
+  section { padding: 8rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
 
-        .skill-category:hover::after {
-            opacity: 0.15;
-            transform: scale(1.2) rotate(10deg);
-            animation: wiggle 0.5s ease;
-        }
+  .section-label { font-family: var(--mono); font-size: 0.65rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; display: block; }
+  .section-title { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+  .section-title em { font-style: italic; color: var(--text-secondary); }
 
-        @keyframes wiggle {
-            0%, 100% { transform: scale(1.2) rotate(10deg); }
-            25% { transform: scale(1.2) rotate(-5deg); }
-            75% { transform: scale(1.2) rotate(15deg); }
-        }
-        
-        .skill-category h3 {
-            margin-bottom: 1rem;
-            color: var(--primary);
-            font-size: 1.3rem;
-        }
-        
-        .grid-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
+  /* ABOUT */
+  #about { background: var(--surface); }
+  .about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .about-text p { font-size: 1.1rem; color: var(--text-secondary); line-height: 1.8; font-weight: 300; }
+  .about-text p strong { color: var(--text); font-weight: 500; }
 
-        .card {
-            background: var(--light);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 2px solid #e9ecef;
-            position: relative;
-            overflow: hidden;
-        }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .stat-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; transition: all 0.4s ease; position: relative; overflow: hidden; }
+  .stat-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41,151,255,0.05), transparent); opacity: 0; transition: opacity 0.4s; }
+  .stat-card:hover { border-color: rgba(41,151,255,0.3); transform: translateY(-4px); }
+  .stat-card:hover::before { opacity: 1; }
+  .stat-number { font-family: var(--serif); font-size: 3rem; font-weight: 400; color: var(--text); line-height: 1; margin-bottom: 0.25rem; }
+  .stat-label { font-size: 0.8rem; color: var(--text-tertiary); letter-spacing: 0.05em; }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0,147,233,0.1), transparent);
-            transition: left 0.6s;
-        }
+  /* SKILLS */
+  #skills { background: var(--bg); }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; background: var(--border); margin-top: 3rem; }
+  .skill-item { background: var(--surface); padding: 2.5rem 2rem; transition: all 0.4s ease; position: relative; overflow: hidden; }
+  .skill-item::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent4)); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+  .skill-item:hover { background: var(--surface2); }
+  .skill-item:hover::before { transform: scaleX(1); }
+  .skill-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; filter: grayscale(0.3); transition: filter 0.3s, transform 0.3s; }
+  .skill-item:hover .skill-icon { filter: grayscale(0); transform: scale(1.15); }
+  .skill-item h3 { font-size: 0.7rem; color: var(--text-tertiary); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.75rem; font-family: var(--mono); font-weight: 400; }
+  .skill-item p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; font-weight: 300; }
 
-        .card:hover::before {
-            left: 100%;
-        }
-        
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-            border-color: var(--primary);
-            background: var(--card-hover);
-        }
-        
-        .card h3 {
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            position: relative;
-            transition: color 0.3s ease;
-        }
+  /* PROJECTS */
+  #projects { background: var(--surface); }
+  .projects-grid { display: grid; gap: 1.5rem; margin-top: 3rem; }
+  .project-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: start; transition: all 0.4s cubic-bezier(0.23,1,0.32,1); position: relative; overflow: hidden; }
+  .project-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41,151,255,0.04), rgba(191,90,242,0.04)); opacity: 0; transition: opacity 0.4s; }
+  .project-card:hover { border-color: rgba(41,151,255,0.25); transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(41,151,255,0.1); }
+  .project-card:hover::after { opacity: 1; }
+  .project-number { font-family: var(--mono); font-size: 0.65rem; color: var(--text-tertiary); letter-spacing: 0.1em; margin-bottom: 1rem; display: block; }
+  .project-card h3 { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; color: var(--text); margin-bottom: 0.75rem; line-height: 1.2; }
+  .project-card p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; font-weight: 300; max-width: 600px; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .tag { padding: 0.3rem 0.85rem; border-radius: 980px; font-size: 0.7rem; font-family: var(--mono); letter-spacing: 0.05em; border: 1px solid; }
+  .tag-blue { color: var(--accent); border-color: rgba(41,151,255,0.25); background: rgba(41,151,255,0.06); }
+  .tag-purple { color: var(--accent4); border-color: rgba(191,90,242,0.25); background: rgba(191,90,242,0.06); }
+  .tag-green { color: var(--accent2); border-color: rgba(48,209,88,0.25); background: rgba(48,209,88,0.06); }
+  .tag-orange { color: var(--accent3); border-color: rgba(255,159,10,0.25); background: rgba(255,159,10,0.06); }
+  .project-emoji { font-size: 4rem; display: flex; align-items: center; justify-content: center; width: 100px; height: 100px; background: var(--surface3); border-radius: 20px; border: 1px solid var(--border); flex-shrink: 0; transition: transform 0.4s cubic-bezier(0.23,1,0.32,1); position: relative; z-index: 1; }
+  .project-card:hover .project-emoji { transform: scale(1.08) rotate(-3deg); }
 
-        /* Project-specific background images on hover */
-        .project-card:nth-child(1):hover::after {
-            content: '🦾';
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 120px;
-            opacity: 0.15;
-            pointer-events: none;
-            animation: floatIcon 3s ease-in-out infinite;
-        }
+  /* EXPERIENCE */
+  #experience { background: var(--bg); }
+  .timeline { position: relative; margin-top: 3rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--border) 10%, var(--border) 90%, transparent); }
+  .timeline-item { padding-left: 2.5rem; padding-bottom: 3.5rem; position: relative; }
+  .timeline-item::before { content: ''; position: absolute; left: -3px; top: 0.4rem; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); transition: box-shadow 0.3s; }
+  .timeline-item:hover::before { box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(41,151,255,0.3); }
+  .timeline-date { font-family: var(--mono); font-size: 0.65rem; color: var(--text-tertiary); letter-spacing: 0.1em; margin-bottom: 0.5rem; display: block; }
+  .timeline-role { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--text); margin-bottom: 0.25rem; }
+  .timeline-org { font-size: 0.85rem; color: var(--accent); margin-bottom: 1.2rem; font-weight: 500; }
+  .timeline-item ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .timeline-item ul li { font-size: 0.9rem; color: var(--text-secondary); padding-left: 1.2rem; position: relative; line-height: 1.6; font-weight: 300; }
+  .timeline-item ul li::before { content: '–'; position: absolute; left: 0; color: var(--text-tertiary); }
 
-        .project-card:nth-child(2):hover::after {
-            content: '🫁';
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 120px;
-            opacity: 0.15;
-            pointer-events: none;
-            animation: floatIcon 3s ease-in-out infinite;
-        }
+  /* FOOTER */
+  footer { padding: 8rem 2rem; text-align: center; position: relative; overflow: hidden; background: var(--surface); }
+  .footer-orb { position: absolute; width: 800px; height: 400px; background: radial-gradient(ellipse, rgba(41,151,255,0.12) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; filter: blur(40px); animation: drift 8s ease-in-out infinite; }
+  .footer-label { font-family: var(--mono); font-size: 0.65rem; color: var(--text-tertiary); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 2rem; display: block; position: relative; }
+  .footer-headline { font-family: var(--serif); font-size: clamp(3rem, 8vw, 7rem); font-weight: 400; color: var(--text); line-height: 1; letter-spacing: -0.02em; margin-bottom: 1rem; position: relative; }
+  .footer-sub { font-size: 1rem; color: var(--text-secondary); margin-bottom: 3rem; font-weight: 300; position: relative; }
+  .footer-links { display: flex; gap: 1rem; justify-content: center; position: relative; }
+  .footer-link { padding: 0.75rem 1.75rem; border-radius: 980px; font-size: 0.85rem; text-decoration: none; font-weight: 500; letter-spacing: 0.02em; transition: all 0.3s ease; font-family: var(--sans); }
+  .link-email { background: var(--accent); color: white; }
+  .link-email:hover { background: #409cff; box-shadow: 0 0 30px rgba(41,151,255,0.5); transform: scale(1.03); }
+  .link-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+  .link-secondary:hover { border-color: rgba(255,255,255,0.2); background: var(--surface3); }
+  .footer-bottom { margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 0.65rem; color: var(--text-tertiary); letter-spacing: 0.05em; position: relative; }
 
-        .project-card:nth-child(3):hover::after {
-            content: '📡';
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 120px;
-            opacity: 0.15;
-            pointer-events: none;
-            animation: floatIcon 3s ease-in-out infinite;
-        }
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.23,1,0.32,1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        @keyframes floatIcon {
-            0%, 100% { transform: translateY(-50%) translateX(0); }
-            50% { transform: translateY(-50%) translateX(-10px); }
-        }
-
-        /* Experience cards - lighter theme */
-        .experience-card {
-            background: linear-gradient(135deg, #e8f4f8 0%, #d4e9f7 100%);
-            color: var(--text);
-            border-color: var(--primary);
-        }
-
-        .experience-card:hover {
-            background: linear-gradient(135deg, #d4e9f7 0%, #c8e3f5 100%);
-            border-color: var(--secondary);
-        }
-
-        .experience-card h3 {
-            color: var(--primary);
-        }
-
-        .experience-card:hover h3 {
-            color: var(--secondary);
-        }
-
-        .experience-card .dates {
-            color: #666;
-        }
-        
-        .experience-header {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-
-        .experience-header p {
-            font-weight: 600;
-        }
-
-        .experience-header .dates {
-            font-style: italic;
-            opacity: 0.7;
-        }
-
-        .card ul {
-            list-style-position: inside;
-            padding-left: 1rem;
-        }
-        
-        .tech-tag {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--light);
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            font-size: 0.85rem;
-            margin: 0.3rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            cursor: default;
-        }
-
-        .technologies {
-            margin-top: 1.5rem;
-        }
-
-        .tech-tag:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,147,233,0.4);
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 3rem 0;
-            background: linear-gradient(135deg, var(--dark) 0%, #34495e 100%);
-            color: var(--light);
-        }
-
-        .footer h2 {
-            color: var(--light);
-            border-bottom-color: var(--primary);
-        }
-
-        .footer p {
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
-
-        .contact-links a {
-            color: var(--light);
-            text-decoration: none;
-            font-weight: 600;
-            margin: 0 1rem;
-            font-size: 1.1rem;
-            padding: 0.8rem 1.8rem;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            display: inline-block;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid var(--primary);
-        }
-
-        .contact-links a:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,147,233,0.4);
-        }
-        
-        @keyframes popIn {
-            from { transform: scale(0.5); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .project-card:hover h3::before {
-            content: '🚀 ';
-            display: inline-block;
-            animation: popIn 0.3s ease forwards;
-        }
-        
-        .experience-card:hover h3::before {
-            content: '💼 ';
-            display: inline-block;
-            animation: popIn 0.3s ease forwards;
-        }
-
-        /* Experience card background icons */
-        .experience-card::after {
-            position: absolute;
-            right: 20px;
-            bottom: 20px;
-            font-size: 80px;
-            opacity: 0.08;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-
-        .experience-card:nth-child(1)::after { content: '🔬'; }
-        .experience-card:nth-child(2)::after { content: '🤖'; }
-        .experience-card:nth-child(3)::after { content: '🏥'; }
-        .experience-card:nth-child(4)::after { content: '🧠'; }
-
-        .experience-card:hover::after {
-            opacity: 0.15;
-            transform: scale(1.1) rotate(-5deg);
-        }
-
-        @media(max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            h2 { font-size: 1.8rem; }
-            
-            .navbar .container {
-                flex-direction: column;
-            }
-            
-            .navbar ul {
-                padding-top: 1rem;
-            }
-
-            .experience-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .contact-links a {
-                display: block;
-                margin: 0.5rem 0;
-            }
-
-            .project-card:nth-child(1):hover::after,
-            .project-card:nth-child(2):hover::after,
-            .project-card:nth-child(3):hover::after {
-                font-size: 80px;
-                right: 10px;
-            }
-        }
-    </style>
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { display: none; }
+    .about-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .project-card { grid-template-columns: 1fr; }
+    .project-emoji { width: 60px; height: 60px; font-size: 2.5rem; }
+    .footer-links { flex-direction: column; align-items: center; }
+    .hero-cta { flex-direction: column; align-items: center; }
+    .hero h1 { white-space: normal; }
+  }
+  @media (max-width: 480px) { .skills-grid { grid-template-columns: 1fr; } .about-stats { grid-template-columns: 1fr; } }
+</style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="container">
-            <a href="#home" class="logo">Bhoomika R</a>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<nav>
+  <a href="#home" class="nav-logo">Bhoomika R</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <span class="hero-eyebrow">Research Assistant · IISc Bangalore</span>
+  <h1>Bhoomika <em>R.</em></h1>
+  <p class="hero-sub">Building at the intersection of embedded systems, computer vision, and medical electronics.</p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn-primary">View Projects</a>
+    <a href="#contact" class="btn-ghost">Get in Touch</a>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-layout">
+      <div class="about-text reveal">
+        <span class="section-label">About</span>
+        <h2 class="section-title">Hardware meets<br><em>intelligence.</em></h2>
+        <p>A graduate of <strong>Medical Electronics Engineering</strong> from Ramaiah Institute of Technology, I work at the intersection of hardware, software, and healthcare. Currently a Research Assistant at IISc, I specialise in embedded systems with deep hands-on experience across <strong>STM32 ARM Cortex-M4/M7</strong>, ESP32, and TinyML deployment on resource-constrained platforms. I also build cloud-connected pipelines using <strong>AWS (Lambda, EC2, S3)</strong> to bridge edge devices with scalable remote infrastructure for real-time field analytics.</p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <div class="stat-number">87<span style="font-size:1.5rem;color:var(--accent)">%</span></div>
+          <div class="stat-label">EEG grasp detection accuracy</div>
         </div>
-    </nav>
-
-    <header class="header" id="home">
-        <div class="container">
-            <h1>Bhoomika R</h1>
-            <p class="tagline">Research Assistant at the Indian Institute of Science (IISc), Bangalore.</p>
+        <div class="stat-card">
+          <div class="stat-number">~250<span style="font-size:1rem;color:var(--accent2)">ms</span></div>
+          <div class="stat-label">Prosthetic response latency</div>
         </div>
-    </header>
-
-    <main>
-        <section id="about" class="container">
-            <div class="section-title-wrapper">
-                <h2>About Me</h2>
-            </div>
-            <p>
-                A graduate of Medical Electronics Engineering from Ramaiah Institute of Technology, I am passionate about the intersection of hardware, software, and the medical domain. This passion led me to an internship and now a full-time role as a Research Assistant at the Indian Institute of Science. My work focuses on embedded systems, where I have hands-on experience with microcontrollers like the STM32 series (ARM Cortex-M7), ESP32, and Seeed Xiao using development tools like STM32 Cube IDE and CubeMX.
-            </p>
-        </section>
-
-        <section id="skills" class="container">
-            <div class="section-title-wrapper">
-                <h2>Skills</h2>
-            </div>
-            <div class="skills-container">
-                <div class="skill-category">
-                    <h3>Areas</h3>
-                    <p>Computer Vision, IoT, Embedded Systems</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Programming Languages</h3>
-                    <p>Python, C/C++</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Frameworks & Tools</h3>
-                    <p>PyTorch, TensorFlow, Git, MATLAB</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Hardware Experience</h3>
-                    <p>Arduino, STM-32 (ARM M4 & M7), ESP32-S3-EYE, ESP32, LilyGo SIM7600E, Seeed Xiao</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Software Development</h3>
-                    <p>STM32CubeIDE, STMCubeMX, Arduino IDE</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects" class="container">
-            <div class="section-title-wrapper">
-                <h2>Projects</h2>
-            </div>
-            <div class="grid-container">
-                <article class="card project-card">
-                    <h3>Neuro-Controlled Prosthetic Arm</h3>
-                    <p>Engineered a prosthetic arm controlled directly by EEG (brainwave) signals. This project utilized a Random Forest machine learning classifier to achieve 87% grasp detection accuracy. The model was integrated with an Arduino-based embedded system to actuate servo motors in real time, achieving an average response latency of ~250ms from signal to action. The system was validated as a low-cost, portable assistive technology prototype.</p>
-                    <div class="technologies">
-                        <span class="tech-tag">Machine Learning</span>
-                        <span class="tech-tag">EEG Signal Processing</span>
-                        <span class="tech-tag">Arduino</span>
-                        <span class="tech-tag">Servo Motors</span>
-                        <span class="tech-tag">Embedded C/C++</span>
-                    </div>
-                </article>
-                <article class="card project-card">
-                    <h3>Wearable Device for Respiratory Assessment</h3>
-                    <p>Designed a wearable respiratory monitoring device using a 3-pin NTC thermistor to enable temperature-based breath detection. The system implements data acquisition and real-time waveform analysis to calculate breaths per minute (BPM). Over-the-Air (OTA) update capabilities were integrated on the ESP32 to ensure flexible deployment for remote healthcare monitoring.</p>
-                    <div class="technologies">
-                        <span class="tech-tag">ESP32</span>
-                        <span class="tech-tag">Arduino</span>
-                        <span class="tech-tag">NTC Thermistor</span>
-                        <span class="tech-tag">OTA Updates</span>
-                        <span class="tech-tag">Real-time Data Processing</span>
-                    </div>
-                </article>
-                <article class="card project-card">
-                    <h3>Over-The-Air Communication with ESP32-S3 Eye</h3>
-                    <p>Developed an IoT system using the ESP32-S3 Eye for wireless data transmission and remote monitoring. The project enabled remote device control and real-time data analysis through mobile integration, demonstrating practical expertise in IoT communication protocols and Over-the-Air (OTA) data management.</p>
-                    <div class="technologies">
-                        <span class="tech-tag">ESP32-S3 Eye</span>
-                        <span class="tech-tag">IoT Protocols</span>
-                        <span class="tech-tag">OTA Updates</span>
-                        <span class="tech-tag">Mobile Integration</span>
-                    </div>
-                </article>
-            </div>
-        </section>
-        
-        <section id="experience" class="container">
-            <div class="section-title-wrapper">
-                <h2>Experience</h2>
-            </div>
-            <div class="grid-container">
-                <article class="card experience-card">
-                    <div class="experience-header">
-                        <p>Research Assistant @ Indian Institute of Science (IISc)</p>
-                        <p class="dates">July 2025 – Present</p>
-                    </div>
-                    <ul>
-                        <li>Researched Neuromorphic/Event cameras, evaluating clustering algorithms for event-based vision tasks on embedded systems.</li>
-                        <li>Optimized clustering algorithms on ARM Cortex-M4 and M7 boards using STM32CubeIDE (C/C++), improving execution efficiency, latency, and cycle life for real-time deployment.</li>
-                        <li>Initiated an insect monitoring project, developing a basic machine learning pipeline on embedded platforms for insect detection with emphasis on resource-efficient edge computation.</li>
-                    </ul>
-                </article>
-                <article class="card experience-card">
-                    <div class="experience-header">
-                        <p>Research Intern @ Indian Institute of Science (IISc)</p>
-                        <p class="dates">April 2024 – September 2025</p>
-                    </div>
-                    <ul>
-                        <li>Conducted research on insect monitoring using a TinyML approach in collaboration with Western Sydney University (WSU), Australia.</li>
-                        <li>Built an IoT-based insect monitoring system using an Arducam Mega 5MP camera and a LilyGo SIM7600E (4G module) to capture and transfer images in real time.</li>
-                        <li>Deployed a local Flask server for remote image visualization and integrated object detection models to automatically identify insects.</li>
-                    </ul>
-                </article>
-                <article class="card experience-card">
-                    <div class="experience-header">
-                        <p>Clinical Intern @ Ramaiah Memorial Hospital</p>
-                        <p class="dates">February 2024 – March 2024</p>
-                    </div>
-                    <ul>
-                        <li>Gained hands-on exposure to medical equipment operation and maintenance, including X-Ray, MRI, CT, and Ultrasound systems.</li>
-                        <li>Acquired practical understanding of healthcare technology integration and real-world biomedical applications in a hospital setting.</li>
-                    </ul>
-                </article>
-                <article class="card experience-card">
-                    <div class="experience-header">
-                        <p>Research Intern (IEEE Project) @ Ramaiah Institute of Technology</p>
-                        <p class="dates">September 2023 – May 2024</p>
-                    </div>
-                    <ul>
-                        <li>Worked on Asphyxia detection using AI and Machine Learning, focusing on automated classification of neonatal cry signals.</li>
-                        <li>Implemented an encoder–decoder architecture, achieving 82% accuracy in distinguishing between asphyxiated and non-asphyxiated cry signals.</li>
-                        <li>Utilized MATLAB for visualization and spectrogram-based analysis, enabling detailed feature extraction for model development.</li>
-                    </ul>
-                </article>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer" id="contact">
-        <div class="container">
-            <div class="section-title-wrapper">
-                <h2>Contact Me</h2>
-            </div>
-            <p>Feel free to reach out. I'm always open to new opportunities and collaborations.</p>
-            <div class="contact-links">
-                <a href="mailto:bhoomikar@iisc.ac.in">Email</a>
-                <a href="https://www.linkedin.com/in/bhoomika1203/" target="_blank">LinkedIn</a>
-                <a href="https://github.com/bhoomika1203" target="_blank">GitHub</a>
-            </div>
+        <div class="stat-card">
+          <div class="stat-number">82<span style="font-size:1.5rem;color:var(--accent4)">%</span></div>
+          <div class="stat-label">Asphyxia detection accuracy</div>
         </div>
-    </footer>
+        <div class="stat-card">
+          <div class="stat-number">2+</div>
+          <div class="stat-label">Years of research experience</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Capabilities</span>
+      <h2 class="section-title">Tools of the<br><em>craft.</em></h2>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-item">
+        <span class="skill-icon">👁️</span>
+        <h3>Domains</h3>
+        <p>Computer Vision · IoT · Embedded Systems · TinyML · Neuromorphic Vision</p>
+      </div>
+      <div class="skill-item">
+        <span class="skill-icon">🐍</span>
+        <h3>Languages</h3>
+        <p>Python · C · C++ · MATLAB</p>
+      </div>
+      <div class="skill-item">
+        <span class="skill-icon">🔥</span>
+        <h3>Frameworks</h3>
+        <p>PyTorch · TensorFlow · Flask · Git</p>
+      </div>
+      <div class="skill-item">
+        <span class="skill-icon">🔌</span>
+        <h3>Microcontrollers</h3>
+        <p>STM32 ARM Cortex-M4/M7 · ESP32 · ESP32-S3-EYE · Arduino · Seeed Xiao · Waveshare SIM7670G · Waveshare SIM7000G</p>
+      </div>
+      <div class="skill-item">
+        <span class="skill-icon">📡</span>
+        <h3>Hardware Modules</h3>
+        <p>LilyGo SIM7600E (4G) · Arducam Mega 5MP · NTC Thermistors · Servo Systems</p>
+      </div>
+      <div class="skill-item">
+        <span class="skill-icon">⚙️</span>
+        <h3>Dev Tools</h3>
+        <p>STM32CubeIDE · STM32CubeMX · Arduino IDE</p>
+      </div>
+      <div class="skill-item">
+        <span class="skill-icon">☁️</span>
+        <h3>Cloud &amp; DevOps</h3>
+        <p>AWS · AWS Lambda · AWS EC2 · AWS S3 · Linux (SSH) · Flask Server Deployment</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Projects</span>
+      <h2 class="section-title">Things I've<br><em>built.</em></h2>
+    </div>
+    <div class="projects-grid">
+
+      <article class="project-card reveal">
+        <div>
+          <span class="project-number">01 / 05</span>
+          <h3>InsectNet</h3>
+          <p>Developed InsectNet, an ESP32-based GSM-connected monitoring system with on-device TinyML pipelines for image segmentation, insect counting, and classification, enabling real-time field analysis for entomology research. Collaborated with Western Sydney University and GB Pant University of Agriculture and Technology to build deployable solutions for tracking insect populations in natural environments. Integrated AWS services (Lambda, EC2, S3) to create a scalable, low-latency pipeline for remote image processing, storage, and analytics. Managed Linux EC2 instances via SSH to ensure reliable deployment, continuous monitoring, and support for real-time data workflows.</p>
+          <div class="project-tags">
+            <span class="tag tag-blue">TinyML</span>
+            <span class="tag tag-green">AWS Lambda · EC2 · S3</span>
+            <span class="tag tag-purple">ESP32 · GSM</span>
+            <span class="tag tag-orange">Image Segmentation</span>
+          </div>
+        </div>
+        <div class="project-emoji">🦟</div>
+      </article>
+
+      <article class="project-card reveal">
+        <div>
+          <span class="project-number">02 / 05</span>
+          <h3>Neuro-Controlled Prosthetic Arm</h3>
+          <p>Engineered a prosthetic arm controlled directly by EEG brainwave signals. A Random Forest classifier achieves 87% grasp detection accuracy, integrated with an Arduino embedded system to actuate servo motors with ~250ms response latency — a low-cost, portable assistive technology prototype.</p>
+          <div class="project-tags">
+            <span class="tag tag-blue">EEG Signal Processing</span>
+            <span class="tag tag-purple">Machine Learning</span>
+            <span class="tag tag-orange">Arduino</span>
+            <span class="tag tag-green">Embedded C/C++</span>
+          </div>
+        </div>
+        <div class="project-emoji">🦾</div>
+      </article>
+
+      <article class="project-card reveal">
+        <div>
+          <span class="project-number">03 / 05</span>
+          <h3>Wearable Respiratory Monitor</h3>
+          <p>Designed a wearable respiratory device using a 3-pin NTC thermistor for temperature-based breath detection. Implements real-time waveform analysis to calculate breaths per minute, with Over-the-Air update capabilities on the ESP32 for flexible remote healthcare deployment.</p>
+          <div class="project-tags">
+            <span class="tag tag-blue">ESP32</span>
+            <span class="tag tag-green">OTA Updates</span>
+            <span class="tag tag-purple">Real-time DSP</span>
+            <span class="tag tag-orange">NTC Thermistor</span>
+          </div>
+        </div>
+        <div class="project-emoji">🫁</div>
+      </article>
+
+      <article class="project-card reveal">
+        <div>
+          <span class="project-number">04 / 05</span>
+          <h3>OTA Communication with ESP32-S3 Eye</h3>
+          <p>Developed a full IoT system using the ESP32-S3 Eye for wireless data transmission and remote monitoring. Enables remote device control and real-time data analysis through mobile integration, demonstrating deep expertise in IoT protocols and OTA data management.</p>
+          <div class="project-tags">
+            <span class="tag tag-blue">ESP32-S3 Eye</span>
+            <span class="tag tag-purple">IoT Protocols</span>
+            <span class="tag tag-green">Mobile Integration</span>
+          </div>
+        </div>
+        <div class="project-emoji">📡</div>
+      </article>
+
+      <article class="project-card reveal">
+        <div>
+          <span class="project-number">05 / 05</span>
+          <h3>Neonatal Asphyxia Detection</h3>
+          <p>Worked on automated classification of neonatal cry signals for asphyxia detection using AI/ML. Implemented an encoder–decoder architecture achieving 82% accuracy in distinguishing asphyxiated from non-asphyxiated cry signals. Utilised MATLAB for spectrogram-based visualisation and feature extraction for model development.</p>
+          <div class="project-tags">
+            <span class="tag tag-blue">Deep Learning</span>
+            <span class="tag tag-purple">Signal Processing</span>
+            <span class="tag tag-orange">MATLAB</span>
+            <span class="tag tag-green">Healthcare AI</span>
+          </div>
+        </div>
+        <div class="project-emoji">👶</div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Experience</span>
+      <h2 class="section-title">Where I've<br><em>worked.</em></h2>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <span class="timeline-date">July 2025 — Present</span>
+        <div class="timeline-role">Research Assistant</div>
+        <div class="timeline-org">Indian Institute of Science (IISc), Bangalore</div>
+        <ul>
+          <li>Researching Neuromorphic/Event cameras, evaluating clustering algorithms for event-based vision tasks on embedded systems.</li>
+          <li>Optimising clustering algorithms on ARM Cortex-M4 and M7 boards using STM32CubeIDE (C/C++), improving execution efficiency, latency, and cycle life for real-time deployment.</li>
+          <li>Developing a machine learning pipeline on embedded platforms for insect detection with emphasis on resource-efficient edge computation.</li>
+          <li>Developed InsectNet, an ESP32-based GSM-enabled system with on-device TinyML for image segmentation, insect counting, and classification, enabling real-time field monitoring. Collaborated with Western Sydney University and GB Pant University of Agriculture and Technology for deployable entomology research solutions.</li>
+          <li>Integrated AWS (Lambda, EC2, S3) to build a scalable, low-latency pipeline for remote image processing and data management. Managed Linux EC2 servers via SSH to ensure reliable deployment, continuous monitoring, and real-time analytics.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <span class="timeline-date">April 2024 — September 2025</span>
+        <div class="timeline-role">Research Intern</div>
+        <div class="timeline-org">Indian Institute of Science (IISc) × Western Sydney University, Australia</div>
+        <ul>
+          <li>Conducted TinyML-based insect monitoring research in collaboration with Western Sydney University (WSU), Australia.</li>
+          <li>Built an IoT insect monitoring system using an Arducam Mega 5MP and LilyGo SIM7600E (4G) for real-time image capture and transfer.</li>
+          <li>Deployed a local Flask server for remote image visualisation and integrated object detection models for automated insect identification.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <span class="timeline-date">February 2024 — March 2024</span>
+        <div class="timeline-role">Clinical Intern</div>
+        <div class="timeline-org">Ramaiah Memorial Hospital, Bangalore</div>
+        <ul>
+          <li>Hands-on exposure to medical equipment operation including X-Ray, MRI, CT, and Ultrasound systems.</li>
+          <li>Gained practical understanding of healthcare technology integration and biomedical applications in a live hospital environment.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <span class="timeline-date">September 2023 — May 2024</span>
+        <div class="timeline-role">Research Intern (IEEE Project)</div>
+        <div class="timeline-org">Ramaiah Institute of Technology</div>
+        <ul>
+          <li>Worked on asphyxia detection using AI/ML, focusing on automated classification of neonatal cry signals.</li>
+          <li>Implemented an encoder–decoder architecture achieving 82% accuracy in distinguishing asphyxiated from non-asphyxiated cry signals.</li>
+          <li>Utilised MATLAB for spectrogram-based visualisation and feature extraction for model development.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<footer id="contact">
+  <div class="footer-orb"></div>
+  <div class="container">
+    <span class="footer-label">Let's connect</span>
+    <h2 class="footer-headline reveal">Say hello.</h2>
+    <p class="footer-sub reveal">Always open to new research opportunities, collaborations, and conversations.</p>
+    <div class="footer-links reveal">
+      <a href="mailto:bhoomika1203@gmail.com" class="footer-link link-email">bhoomika1203@gmail.com</a>
+      <a href="https://www.linkedin.com/in/bhoomika1203/" target="_blank" class="footer-link link-secondary">LinkedIn</a>
+      <a href="https://github.com/bhoomika1203" target="_blank" class="footer-link link-secondary">GitHub</a>
+    </div>
+    <div class="footer-bottom">
+      © 2025 Bhoomika R · Research Assistant, IISc Bangalore
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor — only activates after first mouse move (safe for iframes & touch devices)
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  let cursorEnabled = false;
+
+  document.addEventListener('mousemove', e => {
+    if (!cursorEnabled) {
+      cursorEnabled = true;
+      document.body.style.cursor = 'none';
+      cursor.style.display = 'block';
+      ring.style.display = 'block';
+    }
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = (mx - 4) + 'px';
+    cursor.style.top = (my - 4) + 'px';
+  });
+
+  document.addEventListener('mouseover', e => {
+    if (e.target.closest('a, button')) {
+      ring.style.width = '56px';
+      ring.style.height = '56px';
+      ring.style.borderColor = 'rgba(41,151,255,0.7)';
+    } else {
+      ring.style.width = '36px';
+      ring.style.height = '36px';
+      ring.style.borderColor = 'rgba(41,151,255,0.4)';
+    }
+  });
+
+  (function animateRing() {
+    rx += (mx - rx - 18) * 0.12;
+    ry += (my - ry - 18) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  })();
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = Number(entry.target.dataset.delay) || 0;
+        setTimeout(() => entry.target.classList.add('visible'), delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
